@@ -1,0 +1,12 @@
+<apex:page showHeader="true" sidebar="false" docType="html-5.0" tabStyle="Contact">
+  <apex:remoteObjects >
+    <apex:remoteObjectModel name="Contact" fields="Name,Title,Birthdate,Phone,Email" />
+  </apex:remoteObjects>
+  <apex:pageBlock title="List of Contacts">
+    <c:remoteObjectTable 
+      name="Contact" 
+      fields="Name,Title,Birthdate,Phone,Email" 
+      headers="Name,Title,Birthdate,Phone,Email" 
+      rows="5" />
+  </apex:pageBlock>
+</apex:page>

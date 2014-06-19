@@ -1,0 +1,51 @@
+<apex:component controller="RemoteObjectTableController" id="rotc" layout="none">
+  <apex:attribute name="name" description="name of sObject" type="String" assignTo="{!cName}" />
+  <apex:attribute name="fields" description="csv list of fields" type="String" assignTo="{!cFields}" />
+  <apex:attribute name="headers" description="csv list of headers" type="String" assignTo="{!cHeaders}" />
+  <apex:attribute name="cssClass" description="additional css class" type="String" default="" />
+  <apex:attribute name="rows" description="number of rows" type="int" default="20" />
+  <apex:attribute name="ns" description="jsNamespace used for apex:remoteObjects" type="String" default="SObjectModel" />
+
+  <table id="{!$Component.rotc}-rot" class="{!cssClass} rot" cellpadding="0" cellspacing="0">
+    <thead id="{!$Component.rotc}-rot-th" class="{!cssClass} rot-th">
+      <tr>
+        <apex:repeat value="{!headerValues}" var="header">
+          <th><apex:outputText value="{!header}"/></th>
+        </apex:repeat>
+      </tr>
+    </thead>
+    <tbody id="{!$Component.rotc}-rot-tb" class="{!cssClass} rot-tb"></tbody>
+    <tfoot id="{!$Component.rotc}-rot-tf" class="{!cssClass} rot-tf">
+      <tr>
+        <th colspan="{!fieldCount}">
+          <button id="{!$Component.rotc}-rot-tf-more" class="{!cssClass} rot-tf-more">More</button>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script id="{!$Component.rotc}-rot-tmpl" type="text/x-handlebars-template">
+    <apex:variable var="objType" value="{!$ObjectType[name]}" />
+    <apex:repeat value="{!fieldValues}" var="field">
+      <apex:variable var="fieldType" value="{!objType.fields[field].type}" />
+      <td>{{{!IF(OR(fieldType == 'date', fieldType == 'datetime', fieldType == 'time' ), fieldType, '')} {!field}}}</td>
+    </apex:repeat>
+  </script>
+
+  <apex:stylesheet value="{!$Resource.ROTcss}" />
+  <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js" />
+  <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js" />
+  <apex:includeScript value="{!$Resource.ROTjs}" />
+  <script>
+    // init this table instance
+    ROT.init({
+      tableId: '{!$Component.rotc}-rot',
+      tbodyId: '{!$Component.rotc}-rot-tb',
+      moreId: '{!$Component.rotc}-rot-tf-more',
+      name: '{!name}',
+      limit: {!rows},
+      ns: {!ns},
+      tmplId: '{!$Component.rotc}-rot-tmpl'        
+    });      
+  </script>
+</apex:component>

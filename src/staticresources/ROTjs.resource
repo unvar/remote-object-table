@@ -1,3 +1,22 @@
+/*
+ * We define a Table object that encapsulates our client-side table 
+ * and has event binding to invove remoteObject.retrieve() when 'more'
+ * is clicked and add (render) the resulting records to the table by making use
+ * of the Handlebars template.
+ *
+ * Usage:
+ *
+ *  ROT.init({
+      tableId: '<DOM table Id>',
+      tbodyId: '<DOM table body Id>',
+      moreId: '<DOM more button Id>',
+      name: '<sObject name>',
+      limit: <Page size / no. of rows>,
+      ns: <RemoteObjects jsNamespace>,
+      tmplId: '<DOM tmpl Id>'        
+    });      
+
+ */
 function defineROT(root) {
   root.ROT = (function() {
 
@@ -66,7 +85,7 @@ function defineROT(root) {
 
         // re-enable more
         self.dom.more.disabled = false;
-      })
+      });
     };
 
     // a reference to all tables

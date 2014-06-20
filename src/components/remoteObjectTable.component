@@ -3,7 +3,7 @@
   <apex:attribute name="fields" description="csv list of fields" type="String" assignTo="{!cFields}" />
   <apex:attribute name="headers" description="csv list of headers" type="String" assignTo="{!cHeaders}" />
   <apex:attribute name="cssClass" description="additional css class" type="String" default="" />
-  <apex:attribute name="rows" description="number of rows" type="int" default="20" />
+  <apex:attribute name="rows" description="number of rows" type="Integer" default="20" />
   <apex:attribute name="ns" description="jsNamespace used for apex:remoteObjects" type="String" default="SObjectModel" />
 
   <table id="{!$Component.rotc}-rot" class="{!cssClass} rot" cellpadding="0" cellspacing="0">

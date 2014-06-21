@@ -1,10 +1,10 @@
 <apex:component controller="RemoteObjectTableController" id="rotc" layout="none">
-  <apex:attribute name="name" description="name of sObject" type="String" assignTo="{!cName}" />
-  <apex:attribute name="fields" description="csv list of fields" type="String" assignTo="{!cFields}" />
-  <apex:attribute name="headers" description="csv list of headers" type="String" assignTo="{!cHeaders}" />
-  <apex:attribute name="cssClass" description="additional css class" type="String" default="" />
-  <apex:attribute name="rows" description="number of rows" type="Integer" default="20" />
-  <apex:attribute name="ns" description="jsNamespace used for apex:remoteObjects" type="String" default="SObjectModel" />
+  <apex:attribute name="name" description="The name of the sObject to be displayed in the table, one row per record." type="String" assignTo="{!cName}" />
+  <apex:attribute name="fields" description="A comma-separated list of fields, which will be displayed one per table column." type="String" assignTo="{!cFields}" />
+  <apex:attribute name="headers" description="A comma-separated list of values to use as column headers, in the same order as the fields." type="String" assignTo="{!cHeaders}" />
+  <apex:attribute name="cssClass" description="A class name to be added to the component’s dom elements along with remote-object-table specific classes." type="String" default="" />
+  <apex:attribute name="rows" description="The initial number of data rows in the table or pageSize for more button." type="Integer" default="20" />
+  <apex:attribute name="ns" description="The JavaScript namespace used for the apex:remoteObjects component that retrieves the sObject." type="String" default="SObjectModel" />
 
   <table id="{!$Component.rotc}-rot" class="{!cssClass} rot" cellpadding="0" cellspacing="0">
     <thead id="{!$Component.rotc}-rot-th" class="{!cssClass} rot-th">
@@ -25,10 +25,9 @@
   </table>
 
   <script id="{!$Component.rotc}-rot-tmpl" type="text/x-handlebars-template">
-    <apex:variable var="objType" value="{!$ObjectType[name]}" />
+    <apex:variable var="obj" value="{!$ObjectType[name]}" />
     <apex:repeat value="{!fieldValues}" var="field">
-      <apex:variable var="fieldType" value="{!objType.fields[field].type}" />
-      <td>{{{!IF(OR(fieldType == 'date', fieldType == 'datetime', fieldType == 'time' ), fieldType, '')} {!field}}}</td>
+      <td>{{{!IF( OR( obj.fields[field].type == 'date', obj.fields[field].type == 'datetime', obj.fields[field].type == 'time' ), obj.fields[field].type, '')} {!field}}}</td>
     </apex:repeat>
   </script>
 
